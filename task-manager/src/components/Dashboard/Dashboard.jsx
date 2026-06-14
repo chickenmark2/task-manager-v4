@@ -44,7 +44,7 @@ export default function Dashboard({ user, navigate, darkMode, toggleDark }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('created');
+  const [sortBy, setSortBy] = useState('deadline');
 
   useEffect(() => {
     const q = query(
@@ -53,6 +53,7 @@ export default function Dashboard({ user, navigate, darkMode, toggleDark }) {
       orderBy('createdAt', 'desc')
     );
     const unsub = onSnapshot(q, (snap) => {
+      console.log('[Dashboard] 取得件数:', snap.size, snap.docs.map(d => d.id));
       setTasks(snap.docs.map(d => ({ id: d.id, ...d.data() })));
       setLoading(false);
     }, (err) => {
@@ -97,6 +98,9 @@ export default function Dashboard({ user, navigate, darkMode, toggleDark }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
             <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
               {user.displayName || user.email?.split('@')[0]}
+            </span>
+            <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontFamily: 'monospace', userSelect: 'all' }}>
+              UID: {user.uid}
             </span>
             {tasks.length > 0 && (
               <button
