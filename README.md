@@ -4,7 +4,7 @@
 
 ## アプリ
 
-> Vercel へのデプロイ後に URL を記載します
+>https://task-manager-v4-six.vercel.app/
 
 ## v3 からの変更点
 
